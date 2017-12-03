@@ -5,14 +5,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.GridLayout;
 import android.widget.Toast;
+import android.util.Log;
+import android.widget.ToggleButton;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,6 +28,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
 {
     private int numTries = 0;
+    private int score;
     private int numTiles;
     private int tilesRemaining;
     private boolean firstTime = true;
@@ -54,7 +62,8 @@ public class MainActivity extends AppCompatActivity
     private Button b18;
     private Button b19;
     private Button b20;
-    private Button[] buttonArray;
+    private Button[]  buttonArray;
+    String[] AnimalListRestore;
     private  final String[] fullAnimalList = new String[]
     {
             "CAT",
@@ -68,7 +77,6 @@ public class MainActivity extends AppCompatActivity
             "TIGER",
             "HORSE"
     };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -174,6 +182,23 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
+        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.atarians);
+
+        ToggleButton toggle = findViewById(R.id.musicToggle);
+        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+
+                    mediaPlayer.start();
+
+                    Toast.makeText(getBaseContext(),"Music On",Toast.LENGTH_SHORT).show();
+                } else {
+                    mediaPlayer.pause();
+                    Toast.makeText(getBaseContext(),"Music Off",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
     View.OnClickListener myListener = new View.OnClickListener()
     {
@@ -311,7 +336,7 @@ public class MainActivity extends AppCompatActivity
                 int duration = Toast.LENGTH_LONG;
                 Context c = getApplicationContext();
                 CharSequence t = "Correct Guess!";
-
+                this.score += 2;
                 int d = Toast.LENGTH_SHORT;
 
                 Toast tst = Toast.makeText(c, t, duration);
@@ -323,7 +348,7 @@ public class MainActivity extends AppCompatActivity
             Context context = getApplicationContext();
             CharSequence text = "Incorrect Guess!";
             int duration = Toast.LENGTH_SHORT;
-
+            this.score = score - 1;
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
             for(int i = 0; i < numTiles; i ++)
@@ -351,7 +376,7 @@ public class MainActivity extends AppCompatActivity
         {
             if(buttonArray[i].getText().toString().equals(guess))
             {
-                buttonArray[i].setVisibility(View.INVISIBLE);
+                //buttonArray[i].setVisibility(View.INVISIBLE);
             }
         }
         guesses.clear();
@@ -397,4 +422,21 @@ public class MainActivity extends AppCompatActivity
             buttonArray[i].setText(tempList.get(i));
         }
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState)
+    {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("score",score);
+        Log.d("VIVZ", score+ " was saved");
+
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        super.onRestoreInstanceState(savedInstanceState);
+        score = savedInstanceState.getInt("score");
+        Log.d("VIVZ", score+ " was restored");
+    }
+
 }
