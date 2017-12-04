@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity
     private Button b19;
     private Button b20;
     private Button[]  buttonArray;
+    private  MediaPlayer mediaPlayer;
+    private ToggleButton toggle;
     String[] AnimalListRestore;
 
     private TextView Score;
@@ -130,6 +132,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
+                numTries = 0;
                 revertTiles();
             }
         });
@@ -184,13 +187,14 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.ontarget);
+        mediaPlayer = MediaPlayer.create(this, R.raw.ontarget);
 
-        ToggleButton toggle = findViewById(R.id.musicToggle);
+        toggle = findViewById(R.id.musicToggle);
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
 
+                    Toast.makeText(getBaseContext(),"Toggled",Toast.LENGTH_SHORT).show();
                     mediaPlayer.start();
 
                     Toast.makeText(getBaseContext(),"Music On",Toast.LENGTH_SHORT).show();
@@ -449,12 +453,17 @@ public class MainActivity extends AppCompatActivity
         savedInstanceState.putInt("tilesRemaining", tilesRemaining);
         savedInstanceState.putBoolean("firstTime", firstTime);
         savedInstanceState.putBoolean("quit", quit);
+        savedInstanceState.putInt("position", mediaPlayer.getCurrentPosition());
+        mediaPlayer.pause();
 
     }
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState)
     {
         super.onRestoreInstanceState(savedInstanceState);
+        int position = savedInstanceState.getInt("position");
+
+        mediaPlayer.seekTo(position);
         points = savedInstanceState.getInt("score");
         numTries = savedInstanceState.getInt("numTries");
         numTiles = savedInstanceState.getInt("numTiles");

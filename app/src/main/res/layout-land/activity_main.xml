@@ -9,17 +9,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:weightSum="1">
 
         <GridLayout
             android:id="@+id/grid_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".2"
+            android:layout_alignBottom="@+id/scoreTitle"
+            android:layout_alignParentEnd="true"
+            android:layout_weight=".35"
             android:backgroundTint="#3f1112"
-            android:columnCount="6"
-            android:paddingTop="5dp">
+            android:columnCount="4"
+            android:paddingTop="40dp">
 
             <Button
                 android:id="@+id/button1"
@@ -145,14 +147,15 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".85">
+            android:layout_weight=".35">
 
             <Button
                 android:id="@+id/try_again"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
+                android:layout_alignStart="@+id/new_game"
+                android:layout_marginTop="11dp"
                 android:text="Try Again"
                 tools:layout_editor_absoluteX="277dp"
                 tools:layout_editor_absoluteY="27dp"/>
@@ -162,21 +165,53 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="21dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="19dp"
                 android:text="End Game"/>
 
             <Button
                 android:id="@+id/new_game"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/end_game"
-                android:layout_alignBottom="@+id/end_game"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="32dp"
+                android:layout_alignStart="@+id/end_game"
+                android:layout_below="@+id/try_again"
+                android:layout_marginTop="13dp"
                 android:text="New Game"
                 tools:layout_editor_absoluteX="280dp"
                 tools:layout_editor_absoluteY="365dp"/>
+
+            <ToggleButton
+                android:id="@+id/musicToggle"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/XMLpoints"
+                android:layout_alignStart="@+id/end_game"
+                android:layout_marginBottom="17dp"
+                android:text="MUSIC"/>
+
+            <TextView
+                android:id="@+id/XMLpoints"
+                android:layout_width="222dp"
+                android:layout_height="20dp"
+                android:layout_above="@+id/scoreTitle"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="21dp"
+                android:text="0"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="39dp"/>
+
+            <TextView
+                android:id="@+id/scoreTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_column="0"
+                android:layout_row="10"
+                android:text="Points: "
+                tools:layout_editor_absoluteX="441dp"
+                tools:layout_editor_absoluteY="186dp"/>
+
 
         </RelativeLayout>
 
