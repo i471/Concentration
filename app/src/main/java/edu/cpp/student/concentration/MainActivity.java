@@ -6,10 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,10 +16,8 @@ import android.widget.CompoundButton;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.util.Log;
 import android.widget.ToggleButton;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -389,7 +386,7 @@ public class MainActivity extends AppCompatActivity
         {
             if(buttonArray[i].getText().toString().equals(guess))
             {
-                //buttonArray[i].setVisibility(View.INVISIBLE);
+                buttonArray[i].setVisibility(View.INVISIBLE);
             }
         }
         guesses.clear();
@@ -435,13 +432,23 @@ public class MainActivity extends AppCompatActivity
             buttonArray[i].setText(tempList.get(i));
         }
     }
-
+//
+//    private int numTries = 0;
+//    private int points = 0;
+//    private int numTiles;
+//    private int tilesRemaining;
+//    private boolean firstTime = true;
+//    boolean quit = false;
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState)
     {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putInt("score",points);
-        Log.d("VIVZ", points+ " was saved");
+        savedInstanceState.putInt("numTries", numTries);
+        savedInstanceState.putInt("numTiles", numTiles);
+        savedInstanceState.putInt("tilesRemaining", tilesRemaining);
+        savedInstanceState.putBoolean("firstTime", firstTime);
+        savedInstanceState.putBoolean("quit", quit);
 
     }
     @Override
@@ -449,6 +456,12 @@ public class MainActivity extends AppCompatActivity
     {
         super.onRestoreInstanceState(savedInstanceState);
         points = savedInstanceState.getInt("score");
+        numTries = savedInstanceState.getInt("numTries");
+        numTiles = savedInstanceState.getInt("numTiles");
+        tilesRemaining = savedInstanceState.getInt("tilesRemaining");
+        firstTime = savedInstanceState.getBoolean("firstTime");
+        quit = savedInstanceState.getBoolean("quit");
+        selectList();
         Log.d("VIVZ", points+ " was restored");
     }
 
