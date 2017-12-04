@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.GridLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
 import android.widget.ToggleButton;
@@ -28,7 +29,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
 {
     private int numTries = 0;
-    private int score;
+    private int points = 0;
     private int numTiles;
     private int tilesRemaining;
     private boolean firstTime = true;
@@ -64,6 +65,9 @@ public class MainActivity extends AppCompatActivity
     private Button b20;
     private Button[]  buttonArray;
     String[] AnimalListRestore;
+
+    private TextView Score;
+
     private  final String[] fullAnimalList = new String[]
     {
             "CAT",
@@ -109,7 +113,7 @@ public class MainActivity extends AppCompatActivity
         Button b19 = (Button)findViewById(R.id.button19);
         Button b20 = (Button)findViewById(R.id.button20);
         buttonArray = new Button[]{b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20};
-
+        Score = (TextView) findViewById(R.id.XMLpoints);
         for(int i = 0; i < 20; i ++)
         {
             buttonArray[i].setOnClickListener(myListener);
@@ -183,7 +187,7 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.atarians);
+        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.ontarget);
 
         ToggleButton toggle = findViewById(R.id.musicToggle);
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -321,6 +325,8 @@ public class MainActivity extends AppCompatActivity
             tilesRemaining -=2 ;
             if(playerWin())
             {
+                points +=2;
+                Score.setText(Integer.toString(points));
                 int duration = Toast.LENGTH_LONG;
                 Context c = getApplicationContext();
                 CharSequence t = "Congratulations, you've won!\n" +
@@ -336,7 +342,8 @@ public class MainActivity extends AppCompatActivity
                 int duration = Toast.LENGTH_LONG;
                 Context c = getApplicationContext();
                 CharSequence t = "Correct Guess!";
-                this.score += 2;
+                points +=2;
+                Score.setText(Integer.toString(points));
                 int d = Toast.LENGTH_SHORT;
 
                 Toast tst = Toast.makeText(c, t, duration);
@@ -348,7 +355,13 @@ public class MainActivity extends AppCompatActivity
             Context context = getApplicationContext();
             CharSequence text = "Incorrect Guess!";
             int duration = Toast.LENGTH_SHORT;
-            this.score = score - 1;
+            if(points > 0)
+            {
+                points = points -1 ;
+                Score.setText(Integer.toString(points));
+            }
+
+            Score.setText(Integer.toString(points));
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
             for(int i = 0; i < numTiles; i ++)
@@ -427,16 +440,16 @@ public class MainActivity extends AppCompatActivity
     protected void onSaveInstanceState(Bundle savedInstanceState)
     {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putInt("score",score);
-        Log.d("VIVZ", score+ " was saved");
+        savedInstanceState.putInt("score",points);
+        Log.d("VIVZ", points+ " was saved");
 
     }
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState)
     {
         super.onRestoreInstanceState(savedInstanceState);
-        score = savedInstanceState.getInt("score");
-        Log.d("VIVZ", score+ " was restored");
+        points = savedInstanceState.getInt("score");
+        Log.d("VIVZ", points+ " was restored");
     }
 
 }
