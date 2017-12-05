@@ -142,23 +142,26 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
+                String s = Boolean.toString(firstTime);
                 quit = false;
+                Toast.makeText(getBaseContext(),s,Toast.LENGTH_SHORT).show();
                 tryAgain.setVisibility(View.VISIBLE);
                 newGame.setText("NEW GAME");
                 endGame.setText("END GAME");
                 clearAll();
-                if(!firstTime)
-                {
-                    for(int i = 0; i < 20; i ++)
-                    {
-                        buttonArray[i].setOnClickListener(myListener);
-                        buttonArray[i].setVisibility(View.INVISIBLE);
-                        buttonArray[i].setBackgroundResource(R.drawable.buttonshape);
-                        buttonArray[i].setTextColor(Color.parseColor("#4F4F4F"));
-                    }
-
-                }
+//                if(!firstTime)
+//                {
+//                    for(int i = 0; i < 20; i ++)
+//                    {
+//                        buttonArray[i].setOnClickListener(myListener);
+//                        buttonArray[i].setVisibility(View.INVISIBLE);
+//                        buttonArray[i].setBackgroundResource(R.drawable.buttonshape);
+//                        buttonArray[i].setTextColor(Color.parseColor("#4F4F4F"));
+//                    }
+//
+//                }
                 Intent intent = new Intent(MainActivity.this, TileSelector.class);
+                intent.putExtra("firstTime", firstTime);
                 startActivityForResult(intent, 1);
 
             }
@@ -299,11 +302,13 @@ public class MainActivity extends AppCompatActivity
             numTries ++;
 
 
+
             if(numTries == 2)
             {
                 checkGuess();
                 numTries = 0;
             }
+            view.setClickable(false);
         }
     };
 
@@ -331,6 +336,7 @@ public class MainActivity extends AppCompatActivity
                 int duration = Toast.LENGTH_LONG;
                 Context c = getApplicationContext();
                 CharSequence t = "Congratulations, you've won!\n" +
+                                 "You're final score is: " + points + " points!\n" +
                                  "Press new game to play again, or end game to quit";
 
                 Toast tst = Toast.makeText(c, t, duration);
@@ -406,6 +412,15 @@ public class MainActivity extends AppCompatActivity
                 int result=data.getIntExtra("result", 1);
                 numTiles = result;
                 tilesRemaining = numTiles;
+                points = 0;
+                Score.setText(Integer.toString(points));
+                for(int i = 0; i < 20; i ++)
+                {
+                    buttonArray[i].setOnClickListener(myListener);
+                    buttonArray[i].setVisibility(View.INVISIBLE);
+                    buttonArray[i].setBackgroundResource(R.drawable.buttonshape);
+                    buttonArray[i].setTextColor(Color.parseColor("#4F4F4F"));
+                }
                 selectList();
 
             }
@@ -436,13 +451,6 @@ public class MainActivity extends AppCompatActivity
             buttonArray[i].setText(tempList.get(i));
         }
     }
-//
-//    private int numTries = 0;
-//    private int points = 0;
-//    private int numTiles;
-//    private int tilesRemaining;
-//    private boolean firstTime = true;
-//    boolean quit = false;
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState)
     {
@@ -455,6 +463,7 @@ public class MainActivity extends AppCompatActivity
         savedInstanceState.putBoolean("quit", quit);
         savedInstanceState.putInt("position", mediaPlayer.getCurrentPosition());
         mediaPlayer.pause();
+
 
     }
     @Override
