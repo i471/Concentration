@@ -117,18 +117,7 @@ public class MainActivity extends AppCompatActivity
         Button b20 = (Button)findViewById(R.id.button20);
         buttonArray = new Button[]{b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20};
         Score = (TextView) findViewById(R.id.XMLpoints);
-        UserName = (EditText) findViewById(R.id.playerName);
-        saveName = (Button) findViewById(R.id.SaveName);
 
-
-        saveName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = UserName.getText().toString(); //SaveUserName
-                                                                //Need To make new xml
-
-            }
-        });
 
         for(int i = 0; i < 20; i ++)
         {
@@ -359,7 +348,18 @@ public class MainActivity extends AppCompatActivity
                 UserName.setVisibility(View.VISIBLE);
                 saveName.setVisibility(View.VISIBLE);
 
+                UserName = (EditText) findViewById(R.id.playerName);
+                saveName = (Button) findViewById(R.id.SaveName);
 
+
+                saveName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String name = UserName.getText().toString(); //SaveUserName
+
+
+                    }
+                });
 
 
 
