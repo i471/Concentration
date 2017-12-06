@@ -345,11 +345,14 @@ public class MainActivity extends AppCompatActivity
                                  "You're final score is: " + points + " points!\n" +
                                  "Press new game to play again, or end game to quit";
                 ///////////////////////////////////////////////////////////////////////////////////
-                UserName.setVisibility(View.VISIBLE);
-                saveName.setVisibility(View.VISIBLE);
 
                 UserName = (EditText) findViewById(R.id.playerName);
                 saveName = (Button) findViewById(R.id.SaveName);
+                UserName.setVisibility(View.VISIBLE);
+                saveName.setVisibility(View.VISIBLE);
+
+                //UserName = (EditText) findViewById(R.id.playerName);
+                //saveName = (Button) findViewById(R.id.SaveName);
 
 
                 saveName.setOnClickListener(new View.OnClickListener() {
