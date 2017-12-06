@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity
     private int tilesRemaining;
     private boolean firstTime = true;
     boolean quit = false;
+    private String name;
 
     private List<String> guesses = new ArrayList<>();
     private Button tryAgain;
@@ -60,12 +62,14 @@ public class MainActivity extends AppCompatActivity
     private Button b18;
     private Button b19;
     private Button b20;
+    private Button saveName;
     private Button[]  buttonArray;
     private  MediaPlayer mediaPlayer;
     private ToggleButton toggle;
     String[] AnimalListRestore;
 
     private TextView Score;
+    private static EditText UserName;
 
     private  final String[] fullAnimalList = new String[]
     {
@@ -113,6 +117,19 @@ public class MainActivity extends AppCompatActivity
         Button b20 = (Button)findViewById(R.id.button20);
         buttonArray = new Button[]{b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20};
         Score = (TextView) findViewById(R.id.XMLpoints);
+        UserName = (EditText) findViewById(R.id.playerName);
+        saveName = (Button) findViewById(R.id.SaveName);
+
+
+        saveName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = UserName.getText().toString(); //SaveUserName
+                                                                //Need To make new xml
+
+            }
+        });
+
         for(int i = 0; i < 20; i ++)
         {
             buttonArray[i].setOnClickListener(myListener);
@@ -338,6 +355,15 @@ public class MainActivity extends AppCompatActivity
                 CharSequence t = "Congratulations, you've won!\n" +
                                  "You're final score is: " + points + " points!\n" +
                                  "Press new game to play again, or end game to quit";
+                ///////////////////////////////////////////////////////////////////////////////////
+                UserName.setVisibility(View.VISIBLE);
+                saveName.setVisibility(View.VISIBLE);
+
+
+
+
+
+                ///////////////////////////////////////////////////////////////////////////////////
 
                 Toast tst = Toast.makeText(c, t, duration);
                 tst.show();

@@ -186,9 +186,8 @@
                 android:id="@+id/musicToggle"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/try_again"
-                android:layout_marginBottom="17dp"
+                android:layout_above="@+id/XMLpoints"
+                android:layout_alignParentEnd="true"
                 android:text="MUSIC" />
 
             <TextView
@@ -214,6 +213,26 @@
                 android:text="Points: "
                 tools:layout_editor_absoluteX="441dp"
                 tools:layout_editor_absoluteY="186dp" />
+
+            <EditText
+                android:id="@+id/playerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/XMLpoints"
+                android:layout_alignParentStart="true"
+                android:ems="7"
+                android:inputType="textPersonName"
+                android:text="Enter Your Name"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/SaveName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/XMLpoints"
+                android:layout_toStartOf="@+id/musicToggle"
+                android:text="Save Name"
+                android:visibility="invisible" />
 
 
         </RelativeLayout>
